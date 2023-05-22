@@ -1,18 +1,25 @@
 ﻿Public Class Form1
     Private Function convertDate_YYYYMMDD_to_YYYYNNN(inDate As String) As String
         'you need to write this
-        Dim months() As Integer
-        months = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+        Dim returnVal As Integer
+        Dim months = New Integer() {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 3}
         Dim year As Integer = Strings.Left(inDate, 4)
         Dim month As Integer = Strings.Mid(inDate, 5, 2)
         Dim day As Integer = Strings.Right(inDate, 2)
+        Dim resultant As String
         Dim leapYear As Boolean = isLeapYear(year)
+        Dim nnn As Integer
         If leapYear Then
             ' 29th of february included
             months(2) = 29
-        Else
-            '29th feb not included
         End If
+        For i = 1 To month - 1
+            nnn = nnn + months(i)
+        Next i
+        nnn = nnn + day
+        resultant = String.Format("{0:000}", nnn)
+        returnVal = year & resultant
+        Return returnVal
     End Function
 
     Private Function isLeapYear(year As Integer) As Boolean
